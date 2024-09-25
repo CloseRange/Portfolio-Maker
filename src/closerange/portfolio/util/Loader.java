@@ -30,9 +30,14 @@ public class Loader {
         textureRealNames.put(name, realName);
         saveNames();
     }
+    public static Gson getGson() {
+        return new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
+    }
     private static void loadNames() {
         
-        Gson gson = new Gson();
+        Gson gson = getGson();
         try {
             String inFile = new String(Files.readAllBytes(
                 Paths.get(path + NAMES_LOCATION)));
@@ -44,7 +49,7 @@ public class Loader {
         }
     }
     private static void saveNames() {
-        Gson gson = new Gson();
+        Gson gson = getGson();
         String json = gson.toJson(textureRealNames);
         try {
             File linkerFile = new File(path + NAMES_LOCATION);

@@ -36,7 +36,19 @@ public class AssetsFrame extends GuiFrame {
             ImGui.text("No files found");
             return;
         }
+
+        if(Keyboard.Key.ESCAPE.isPressed()) {
+            selected = null;
+        }
+
         
+        renderListOfImages(textures, size);
+    }
+    public static void renderListOfImages(ArrayList<Texture> textures, float size) {
+        renderListOfImages(textures, size, true);
+    }
+    public static void renderListOfImages(ArrayList<Texture> textures, float size, boolean showNames) {
+
         ImVec2 windowPos = new ImVec2();
         ImGui.getWindowPos(windowPos);
         ImVec2 windowSize = new ImVec2();
@@ -45,16 +57,12 @@ public class AssetsFrame extends GuiFrame {
         ImGui.getStyle().getItemSpacing(itemSpacing);
         float windowX2 = windowPos.x + windowSize.x;
 
-        if(Keyboard.Key.ESCAPE.isPressed()) {
-            selected = null;
-        }
 
-        
         int index = 0;
         for(Texture tex : textures) {
             String name = Loader.getName(tex);
             
-            if(renderBar(tex, index++, name)) {
+            if(renderBar(tex, index++, name, size, showNames)) {
                 selected = tex;
             }
             
@@ -66,9 +74,11 @@ public class AssetsFrame extends GuiFrame {
                 ImGui.sameLine();
         }
     }
-    
+    public static Texture getSelected() {
+        return selected;
+    }
 
-    private boolean renderBar(Texture texture, int id, String text) {
+    private static boolean renderBar(Texture texture, int id, String text, float size, boolean showNames) {
         float textW = ImGui.calcTextSize(text).x;
         float textH = ImGui.calcTextSize(text).y;
         float padX = ImGui.getStyle().getFramePaddingX();
@@ -112,14 +122,16 @@ public class AssetsFrame extends GuiFrame {
         float dx = ImGui.getCursorPosX();
         float dy = ImGui.getCursorPosY();
         ImGui.setCursorPosY(dy -textH-padY*2);
-        Texture point = Library.loadSystemTexture("point.png");
-        ImGui.image(point.getTextureId(), avail, textH, 0, 0, 1, 1, 0, 0, 0, .75f);
+        if(showNames) {
+            Texture point = Library.loadSystemTexture("point.png");
+            ImGui.image(point.getTextureId(), avail, textH, 0, 0, 1, 1, 0, 0, 0, .75f);
 
-        float off = (avail - textSize) * .5f;
-        if (off > 0.0f)
-            ImGui.setCursorPosX(dx + off);
-        ImGui.setCursorPosY(dy -textH-padY*2);
-        ImGui.text(text);
+            float off = (avail - textSize) * .5f;
+            if (off > 0.0f)
+                ImGui.setCursorPosX(dx + off);
+            ImGui.setCursorPosY(dy -textH-padY*2);
+            ImGui.text(text);
+        }
 
         ImGui.endChild();
         

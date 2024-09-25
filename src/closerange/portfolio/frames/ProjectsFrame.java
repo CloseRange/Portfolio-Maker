@@ -16,6 +16,14 @@ public class ProjectsFrame extends GuiFrame {
         return ImGuiWindowFlags.MenuBar;
     }
 
+    public static Project getSelected() {
+        if(selected == -1) return null;
+        return Project.getAll().get(selected);
+    }
+    public static void setSelected(int i) {
+        selected = i;
+    }
+
     private static ImString name = new ImString(128);
     private static boolean creatingProject = false;
     private static int selected = -1;

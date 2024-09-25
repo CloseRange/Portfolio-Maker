@@ -16,8 +16,8 @@ public class Project {
     
     public String name;
     public String description;
-    public String[] images;
-    public String[] links;
+    public String[] images = new String[0];
+    public String[] links = new String[0];
 
     
 
@@ -25,7 +25,7 @@ public class Project {
     private static ArrayList<Project> projects = null;
     public static ArrayList<Project> getAll() {
         if(projects == null) {
-            Gson gson = new Gson();
+            Gson gson = Loader.getGson();
             try {
                 String path = Loader.getProjectPath() + PROJECTS_LOCATION;
                 if(!(new File(path).exists())) {
@@ -54,9 +54,9 @@ public class Project {
         projects.add(proj);
         save();
     }
-    private static void save() {
+    public static void save() {
         // save
-        Gson gson = new Gson();
+        Gson gson = Loader.getGson();
         String json = gson.toJson(projects);
         try {
             String path = Loader.getProjectPath() + PROJECTS_LOCATION;
