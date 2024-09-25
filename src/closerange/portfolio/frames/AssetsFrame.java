@@ -6,6 +6,7 @@ import org.joml.Vector2f;
 
 import closerange.display.GuiFrame;
 import closerange.display.Keyboard;
+import closerange.display.Mouse;
 import closerange.portfolio.util.Library;
 import closerange.portfolio.util.Loader;
 import closerange.portfolio.util.PMath;
@@ -16,6 +17,7 @@ import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
+import imgui.type.ImString;
 
 public class AssetsFrame extends GuiFrame {
 
@@ -50,7 +52,7 @@ public class AssetsFrame extends GuiFrame {
         
         int index = 0;
         for(Texture tex : textures) {
-            String name = tex.toString();
+            String name = Loader.getName(tex);
             
             if(renderBar(tex, index++, name)) {
                 selected = tex;
@@ -96,10 +98,12 @@ public class AssetsFrame extends GuiFrame {
         } else {
             if(ImGui.isWindowHovered()) {
                 Viewer.viewTooltip(texture);
-                // if(Mouse.Button.RIGHT.isReleased())
-                //     OptionsRenderer.toggleExplorerPopup(id);
+                if(Mouse.Button.RIGHT.isReleased())
+                    ImGui.openPopup("explorer_popup" + id);
             }
         }
+        onExplorerPopup(texture, "explorer_popup" + id);
+
         ImGui.popStyleColor();
         
         float textSize = textW + padX * 2.0f;
@@ -150,5 +154,27 @@ public class AssetsFrame extends GuiFrame {
     public static boolean renderEmpty(float dx, float dy, float size) {
         ImGui.setCursorPos(dx, dy);
         return ImGui.imageButton(Library.loadSystemTexture("point.png").getTextureId(), size, size, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0);
+    }
+
+
+    private static ImString newName = new ImString(128);
+    private static void onExplorerPopup(Texture texture, String id) {
+        if(ImGui.beginPopup(id)) {
+            if(ImGui.beginMenu("Rename")) {
+                ImGui.inputText("##newName" + id, newName);
+                ImGui.sameLine();
+                if(ImGui.menuItem("Accept") || Keyboard.isPressed(Keyboard.Key.ENTER)) {
+                    Loader.linkTextureName(texture.toString(), newName.get());
+                    newName.set("");
+                    ImGui.closeCurrentPopup();
+                }
+                ImGui.endMenu();
+            }
+            if(ImGui.menuItem("Delete")) {
+                Library.removeTexture(texture);
+            }
+            ImGui.endPopup();
+        }
+
     }
 }

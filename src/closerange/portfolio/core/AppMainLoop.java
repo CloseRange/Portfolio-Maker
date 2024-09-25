@@ -5,6 +5,7 @@ import closerange.display.DisplayLoop;
 import closerange.display.ImGuiBinder;
 import closerange.portfolio.util.FrameManager;
 import closerange.portfolio.util.Library;
+import closerange.portfolio.util.Loader;
 
 public class AppMainLoop implements DisplayLoop {
     private static Display display;
@@ -25,6 +26,7 @@ public class AppMainLoop implements DisplayLoop {
 
     @Override
     public void onStart() {
+        Loader.loadSite("D:\\Programs\\github\\Portfolio-Maker\\testSite");
         FrameManager.startAll();
     }
 
