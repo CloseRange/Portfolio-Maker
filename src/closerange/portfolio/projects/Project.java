@@ -17,9 +17,13 @@ public class Project {
     public String name;
     public String description;
     public String[] images = new String[0];
-    public String[] links = new String[0];
+    public String mainImage;
+    public String link = "";
+    public boolean isGithub = false;
+    public String[] technologies = new String[0];
+    public String[] collaborators = new String[0];
+    public String[] codeSamples = new String[0];    
 
-    
 
 
     private static ArrayList<Project> projects = null;

@@ -1,6 +1,5 @@
 package closerange.portfolio.util;
 
-import closerange.portfolio.debug.LogFrame;
 import closerange.portfolio.frames.*;
 
 public class FrameManager {
@@ -8,6 +7,8 @@ public class FrameManager {
         new AssetsFrame();
         new ProjectsFrame();
         new PropertiesFrame();
-        new LogFrame();
+        // new LogFrame();
+        new TechnologyFrame();
+        new CollaboratorFrame();
     }
 }
