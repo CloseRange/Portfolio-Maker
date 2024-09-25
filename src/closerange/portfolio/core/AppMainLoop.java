@@ -4,6 +4,7 @@ import closerange.display.Display;
 import closerange.display.DisplayLoop;
 import closerange.display.ImGuiBinder;
 import closerange.portfolio.util.FrameManager;
+import closerange.portfolio.util.Library;
 
 public class AppMainLoop implements DisplayLoop {
     private static Display display;
@@ -18,7 +19,8 @@ public class AppMainLoop implements DisplayLoop {
     }
 
     @Override
-    public void onFileDrop(String dt) {
+    public void onFileDrop(String path) {
+        Library.copyFileToProject(path);
     }
 
     @Override

@@ -81,6 +81,8 @@ public class Texture {
         glBindTexture(GL_TEXTURE_2D, 0);
         return this;
     }
+    @Override
+    public String toString() { return name; }
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, texID);
     }
