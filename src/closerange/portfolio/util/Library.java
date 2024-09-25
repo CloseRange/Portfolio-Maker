@@ -10,6 +10,8 @@ import closerange.portfolio.debug.Debug;
 
 public class Library {
     private static HashMap<String, Texture> library = new HashMap<>();
+    private static HashMap<String, Texture> systemTextures = new HashMap<>();
+
     public static final String TEXTURE_PATH = "/textures/";
 
     public static Texture load(String name) {
@@ -43,6 +45,17 @@ public class Library {
             Debug.error("Failed to copy file: " + path);
         }
         return null;
+    }
+    public static Texture loadSystemTexture(String name) {
+        if (!systemTextures.containsKey(name)) {
+            String path = "res/" + TEXTURE_PATH + name;
+            if(!(new File(path)).exists()) {
+                Debug.error("Texture not found: " + name);
+            }
+            systemTextures.put(name, new Texture().setTexture(path));
+        }
+        return systemTextures.get(name);
+
     }
 }
 

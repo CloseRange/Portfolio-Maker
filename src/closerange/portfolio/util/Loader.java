@@ -40,4 +40,7 @@ public class Loader {
         }
         return textures;
     }
+    public static String getName(Texture texture) {
+        return texture.toString();
+    }
 }
