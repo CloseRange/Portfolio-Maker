@@ -19,9 +19,20 @@ public class Loader {
     public static boolean isLoaded = false;
     private static String path = null;
     public static final String NAMES_LOCATION = "/redirect_names.json";
+    public static final String META_LOCATION = "res/meta.json";
     private static ArrayList<String> textureNames = null;
     private static ArrayList<Texture> textures = null;
     private static HashMap<String, String> textureRealNames = new HashMap<>();
+    private static HashMap<String, String> meta = new HashMap<>();
+    public static void loadSite() {
+        loadMeta();
+        String path = meta.get("lastWebsite");
+        if(path == null || !(new File(path)).exists()) {
+            Debug.error("No last website found");
+            return;
+        }
+        loadSite(path);
+    }
     public static void loadSite(String path) {
         textures = null;
         textureNames = null;
@@ -35,6 +46,9 @@ public class Loader {
 
         loadNames();
         isLoaded = true;
+
+        meta.put("lastWebsite", path);
+        saveMeta();
     }
     public static boolean loaded() { return isLoaded; }
     public static void linkTextureName(String name, String realName) {
@@ -70,6 +84,31 @@ public class Loader {
             writer.close();
         } catch(IOException e) {
             Debug.error("Error saving linker file: " + e.getMessage());
+        }
+    }
+    private static void loadMeta() {
+        Gson gson = getGson();
+        try {
+            String inFile = new String(Files.readAllBytes(Paths.get(META_LOCATION)));
+            Type type = new TypeToken<HashMap<String, String>>(){}.getType();
+            meta = gson.fromJson(inFile, type);
+        } catch(Exception e) {
+            // e.printStackTrace();
+            Debug.error("Error loading meta file: " + e.getMessage());
+        }
+    }
+    private static void saveMeta() {
+        if(!isLoaded) return;
+        Gson gson = getGson();
+        String json = gson.toJson(meta);
+        try {
+            File linkerFile = new File(META_LOCATION);
+            if(!linkerFile.exists()) (new File(path)).mkdirs();
+            FileWriter writer = new FileWriter(META_LOCATION);
+            writer.write(json);
+            writer.close();
+        } catch(IOException e) {
+            Debug.error("Error saving meta file: " + e.getMessage());
         }
     }
     public static String getProjectPath() {
