@@ -26,7 +26,7 @@ public class AppMainLoop implements DisplayLoop {
 
     @Override
     public void onStart() {
-        Loader.loadSite("D:\\Programs\\github\\Portfolio-Maker\\testSite");
+        // Loader.loadSite("D:\\Programs\\github\\Portfolio-Maker\\testSite");
         FrameManager.startAll();
     }
 

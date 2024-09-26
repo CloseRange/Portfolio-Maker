@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import closerange.display.GuiFrame;
 import closerange.portfolio.projects.Technology;
 import closerange.portfolio.util.Library;
+import closerange.portfolio.util.Loader;
 import closerange.portfolio.util.Texture;
 import imgui.ImGui;
 import imgui.type.ImString;
@@ -20,6 +21,7 @@ public class TechnologyFrame extends GuiFrame {
     Texture icon = null;
     @Override
     public void onGui() {
+        if(!Loader.loaded()) return;
         ArrayList<Technology> techs = Technology.getAll();
 
         ImGui.text("Create New Technology");

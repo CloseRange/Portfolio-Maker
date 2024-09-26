@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import closerange.display.GuiFrame;
 import closerange.portfolio.projects.Collaborator;
 import closerange.portfolio.util.Library;
+import closerange.portfolio.util.Loader;
 import closerange.portfolio.util.Texture;
 import imgui.ImGui;
 import imgui.type.ImString;
@@ -21,6 +22,7 @@ public class CollaboratorFrame extends GuiFrame {
     Texture icon = null;
     @Override
     public void onGui() {
+        if(!Loader.loaded()) return;
         ArrayList<Collaborator> collabs = Collaborator.getAll();
 
         ImGui.text("Create New Collaborator");

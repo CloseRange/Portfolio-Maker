@@ -30,6 +30,7 @@ public class AssetsFrame extends GuiFrame {
     private static Texture selected = null;
     @Override
     public void onGui() {
+        if(!Loader.loaded()) return;
         ArrayList<Texture> textures = Loader.getAllTexture();
         
         if(textures.size() == 0) {

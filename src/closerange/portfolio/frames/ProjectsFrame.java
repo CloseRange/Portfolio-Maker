@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import closerange.display.GuiFrame;
 import closerange.portfolio.projects.Project;
+import closerange.portfolio.util.Loader;
 import imgui.ImGui;
 import imgui.type.ImString;
 
@@ -25,20 +26,7 @@ public class ProjectsFrame extends GuiFrame {
     private static int selected = -1;
     @Override
     public void onGui() {
-        // if(ImGui.beginMenuBar()) {
-        //     if(ImGui.beginMenu("Edit")) {
-        //         if(ImGui.menuItem("Add Project")) {
-        //         }
-        //         if(selected != -1) {
-        //             if(ImGui.menuItem("Delete Selected")) {
-        //                 Project.removeIndex(selected);
-        //                 selected = -1;
-        //             }
-        //         }
-        //         ImGui.endMenu();
-        //     }
-        //     ImGui.endMenuBar();
-        // }
+        if(!Loader.loaded()) return;
         ImGui.text("New Project");
         PropertiesRender.renderInputText("Name", iName);
         if(PropertiesRender.buttonToggleCorner("Create", new Color(.2f, .7f, .3f, 1f), iName.get().length() > 0)) {
@@ -60,7 +48,6 @@ public class ProjectsFrame extends GuiFrame {
             ImGui.nextColumn();
             boolean remove = false;
             if(ImGui.button("X", 50, 0)) {
-                System.out.println("Removing " + proj.name);
                 Project.removeIndex(index);
                 selected = -1;
                 remove = true;

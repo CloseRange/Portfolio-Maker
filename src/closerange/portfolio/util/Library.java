@@ -38,6 +38,7 @@ public class Library {
     }
 
     public static Texture copyFileToProject(String path) {
+        if(!Loader.isLoaded) return null;
         String uuidName = UUID.randomUUID().toString().replaceAll("[^-A-Za-z0-9]", "");
         path = path.replaceAll("\\\\", "/");
         String realName = path

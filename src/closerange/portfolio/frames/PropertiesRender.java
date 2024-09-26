@@ -222,7 +222,6 @@ public class PropertiesRender {
         }
         ImGui.sameLine();
         if(buttonToggle("Remove##codeSample", new Color(.8f, .1f, .15f, 1f), index != -1, width)) {
-            System.out.println("Removing " + index);
             codeSamples.remove((int) index);
             while(index >= codeSamples.size()) {
                 index--;

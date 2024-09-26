@@ -27,6 +27,7 @@ public class Project {
 
 
     private static ArrayList<Project> projects = null;
+    public static void clear() { projects = null; }
     public static ArrayList<Project> getAll() {
         if(projects == null) {
             Gson gson = Loader.getGson();

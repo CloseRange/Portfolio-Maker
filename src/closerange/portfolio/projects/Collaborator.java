@@ -22,6 +22,7 @@ public class Collaborator {
     }
 
     private static ArrayList<Collaborator> allCollabs = null;
+    public static void clear() { allCollabs = null; }
 
     public static ArrayList<Collaborator> getAll() {
         if(allCollabs == null) {

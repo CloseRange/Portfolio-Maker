@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import closerange.display.GuiFrame;
 import closerange.portfolio.projects.Project;
 import closerange.portfolio.util.Library;
+import closerange.portfolio.util.Loader;
 import closerange.portfolio.util.Texture;
 import imgui.ImGui;
 import imgui.type.ImString;
@@ -29,6 +30,8 @@ public class PropertiesFrame extends GuiFrame {
     protected static Integer currentCodeSample = -1;
     @Override
     public void onGui() {
+        MainMenuBar.onGui();
+        if(!Loader.loaded()) return;
         PropertiesRender.applyPaddingY();
         if(selected != ProjectsFrame.getSelected()) {
             selected = ProjectsFrame.getSelected();
@@ -95,7 +98,8 @@ public class PropertiesFrame extends GuiFrame {
             codeSamples.add(code);
         }
         currentCodeSample = codeSamples.size() - 1;
-        iCodeSample.set(codeSamples.get(currentCodeSample));
+        if(currentCodeSample > 0 && codeSamples.get(currentCodeSample) != null)
+            iCodeSample.set(codeSamples.get(currentCodeSample));
 
     }
     private void save() {

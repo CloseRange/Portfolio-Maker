@@ -20,6 +20,7 @@ public class Technology {
     }
 
     private static ArrayList<Technology> allTechs = null;
+    public static void clear() { allTechs = null; }
 
     public static ArrayList<Technology> getAll() {
         if(allTechs == null) {

@@ -13,19 +13,30 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
 import closerange.portfolio.debug.Debug;
+import closerange.portfolio.projects.*;
 
 public class Loader {
-    
+    public static boolean isLoaded = false;
     private static String path = null;
     public static final String NAMES_LOCATION = "/redirect_names.json";
     private static ArrayList<String> textureNames = null;
     private static ArrayList<Texture> textures = null;
     private static HashMap<String, String> textureRealNames = new HashMap<>();
     public static void loadSite(String path) {
+        textures = null;
+        textureNames = null;
+        textureRealNames = new HashMap<>();
+        Collaborator.clear();
+        Project.clear();
+        Technology.clear();
+
         Loader.path = path;
+        System.out.println("Loading site: " + path);
 
         loadNames();
+        isLoaded = true;
     }
+    public static boolean loaded() { return isLoaded; }
     public static void linkTextureName(String name, String realName) {
         textureRealNames.put(name, realName);
         saveNames();
@@ -36,7 +47,6 @@ public class Loader {
                 .create();
     }
     private static void loadNames() {
-        
         Gson gson = getGson();
         try {
             String inFile = new String(Files.readAllBytes(
@@ -49,6 +59,7 @@ public class Loader {
         }
     }
     private static void saveNames() {
+        if(!isLoaded) return;
         Gson gson = getGson();
         String json = gson.toJson(textureRealNames);
         try {
@@ -74,6 +85,7 @@ public class Loader {
             String loc = Loader.getProjectPath() + Library.TEXTURE_PATH;
             File folder = new File(loc);
             File[] files = folder.listFiles();
+            if(files == null) return;
             for(File file : files) {
                 if(file.getName().endsWith(".png")) {
                     textureNames.add(file.getName());
