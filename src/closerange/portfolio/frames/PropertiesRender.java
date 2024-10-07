@@ -119,8 +119,8 @@ public class PropertiesRender {
 
         ImGui.endChild();
         if (ImGui.beginDragDropTarget()) {
-            ImGui.acceptDragDropPayload("TEXTURE", Texture.class);
-            Texture texture = ImGui.getDragDropPayload();
+            Texture texture = ImGui.acceptDragDropPayload("TEXTURE", Texture.class);
+            // Texture texture = ImGui.getDragDropPayload();
             if (texture != null && Mouse.isReleased(Mouse.Button.LEFT)) {
                 if (!images.contains(texture))
                     images.add(texture);
@@ -143,8 +143,8 @@ public class PropertiesRender {
 
         ImGui.endChild();
         if (ImGui.beginDragDropTarget()) {
-            ImGui.acceptDragDropPayload("TEXTURE", Texture.class);
-            Texture texture = ImGui.getDragDropPayload();
+            Texture texture = ImGui.acceptDragDropPayload("TEXTURE", Texture.class);
+            // Texture texture = ImGui.getDragDropPayload();
             if (texture != null && Mouse.isReleased(Mouse.Button.LEFT)) {
                 mainImage = texture;
             }

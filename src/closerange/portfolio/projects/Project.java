@@ -41,6 +41,18 @@ public class Project {
         return name.toLowerCase().replace(" ", "_") + ".html";
     }
 
+    public static void moveProject(int from, int to) {
+        getAll();
+        if (from < projects.size() && from >= 0 && to <= projects.size() && to >= 0) {
+            Project proj = projects.get(from);
+            projects.add(to, proj);
+            if (to < from)
+                from++;
+            projects.remove(from);
+            save();
+        }
+    }
+
     public static ArrayList<Project> getAll() {
         if (projects == null) {
             Gson gson = Loader.getGson();

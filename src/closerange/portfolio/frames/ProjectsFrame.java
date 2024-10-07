@@ -3,6 +3,7 @@ package closerange.portfolio.frames;
 import java.awt.Color;
 
 import closerange.display.GuiFrame;
+import closerange.display.Mouse;
 import closerange.portfolio.projects.Project;
 import closerange.portfolio.util.Loader;
 import imgui.ImGui;
@@ -49,6 +50,11 @@ public class ProjectsFrame extends GuiFrame {
             if (ImGui.selectable(proj.name, selected == index)) {
                 selected = (selected == index) ? -1 : index;
             }
+            if (ImGui.beginDragDropSource()) {
+                ImGui.setDragDropPayload("PROJECT", (Integer) Project.getAll().indexOf(proj));
+                ImGui.text(proj.name);
+                ImGui.endDragDropSource();
+            }
             ImGui.nextColumn();
             boolean remove = false;
             if (ImGui.button("X", 50, 0)) {
@@ -57,8 +63,25 @@ public class ProjectsFrame extends GuiFrame {
                 remove = true;
             }
             ImGui.nextColumn();
+            ImGui.beginChild("##child" + index, 0, 10, false);
+            ImGui.endChild();
+            if (ImGui.beginDragDropTarget()) {
+                Integer _index = ImGui.acceptDragDropPayload("PROJECT", Integer.class);
+                // Integer _index = ImGui.getDragDropPayload();
+                if (_index != null && Mouse.isReleased(Mouse.Button.LEFT)) {
+                    var ind = index + 1;
+                    System.out.println("Moving project from " + _index + " to " + ind);
+                    Project.moveProject(_index, ind);
+                    remove = true;
+                }
+                // ImGui.setDragDropPayload("PROJECT", Project.getAll().indexOf(proj));
+                // ImGui.text(proj.name);
+                ImGui.endDragDropTarget();
+            }
+
             ImGui.popID();
             index++;
+
             if (remove)
                 break;
         }

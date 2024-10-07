@@ -14,16 +14,19 @@ public class MainMenuBar {
         if (ImGui.beginMainMenuBar()) {
             menuHeight = ImGui.getWindowSizeY();
             if (ImGui.beginMenu("File")) {
+                String path = Loader.getProjectPath();
+                if (!Loader.loaded())
+                    path = "user.dir";
                 if (ImGui.menuItem("Open Project")) {
-                    FilePicker.pickFile(null);
+                    FilePicker.pickFile(null, path);
                     isNew = false;
                 }
                 if (ImGui.menuItem("New Project")) {
-                    FilePicker.pickFile("Project Name");
+                    FilePicker.pickFile("Project Name", path);
                     isNew = true;
                 }
                 if (Loader.isLoaded && ImGui.menuItem("Export Project")) {
-                    FilePicker.pickFile("Project Name");
+                    FilePicker.pickFile("Project Name", path);
                     isExport = true;
                 }
                 ImGui.endMenu();

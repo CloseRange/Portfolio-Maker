@@ -19,10 +19,12 @@ public class Loader {
     public static boolean isLoaded = false;
     private static String path = null;
     public static final String NAMES_LOCATION = "/redirect_names.json";
+    public static final String FOLDERS_LOCATION = "/redirect_folders.json";
     public static final String META_LOCATION = "res/meta.json";
     private static ArrayList<String> textureNames = null;
     private static ArrayList<Texture> textures = null;
     private static HashMap<String, String> textureRealNames = new HashMap<>();
+    private static HashMap<String, String> textureFolders = new HashMap<>();
     private static HashMap<String, String> meta = new HashMap<>();
 
     public static void loadSite() {
@@ -39,6 +41,7 @@ public class Loader {
         textures = null;
         textureNames = null;
         textureRealNames = new HashMap<>();
+        textureFolders = new HashMap<>();
         Collaborator.clear();
         Project.clear();
         Technology.clear();
@@ -63,6 +66,11 @@ public class Loader {
         saveNames();
     }
 
+    public static void linkTextureFolder(String name, String folder) {
+        textureFolders.put(name, folder);
+        saveFolders();
+    }
+
     public static Gson getGson() {
         return new GsonBuilder()
                 .setPrettyPrinting()
@@ -81,6 +89,21 @@ public class Loader {
             // e.printStackTrace();
             Debug.error("Error loading linker file: " + e.getMessage());
         }
+        loadFolders();
+    }
+
+    private static void loadFolders() {
+        Gson gson = getGson();
+        try {
+            String inFile = new String(Files.readAllBytes(
+                    Paths.get(path + FOLDERS_LOCATION)));
+            Type type = new TypeToken<HashMap<String, String>>() {
+            }.getType();
+            textureFolders = gson.fromJson(inFile, type);
+        } catch (Exception e) {
+            // e.printStackTrace();
+            Debug.error("Error loading linker file: " + e.getMessage());
+        }
     }
 
     private static void saveNames() {
@@ -93,6 +116,23 @@ public class Loader {
             if (!linkerFile.exists())
                 (new File(path)).mkdirs();
             FileWriter writer = new FileWriter(path + NAMES_LOCATION);
+            writer.write(json);
+            writer.close();
+        } catch (IOException e) {
+            Debug.error("Error saving linker file: " + e.getMessage());
+        }
+    }
+
+    private static void saveFolders() {
+        if (!isLoaded)
+            return;
+        Gson gson = getGson();
+        String json = gson.toJson(textureFolders);
+        try {
+            File linkerFile = new File(path + FOLDERS_LOCATION);
+            if (!linkerFile.exists())
+                (new File(path)).mkdirs();
+            FileWriter writer = new FileWriter(path + FOLDERS_LOCATION);
             writer.write(json);
             writer.close();
         } catch (IOException e) {
@@ -172,5 +212,13 @@ public class Loader {
 
     public static String getName(String name) {
         return textureRealNames.getOrDefault(name, name);
+    }
+
+    public static String getFolder(Texture texture) {
+        return getFolder(texture.toString());
+    }
+
+    public static String getFolder(String name) {
+        return textureFolders.getOrDefault(name, "");
     }
 }
