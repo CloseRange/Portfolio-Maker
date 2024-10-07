@@ -5,5 +5,3 @@ class Entry {
         AppMainLoop.runProgram("Portfolio Maker");
     }
 }
-
-
