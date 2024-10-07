@@ -1,0 +1,62 @@
+#TITLE#
+#NAME#
+#SUB_NAME#
+#DESCRIPTION#
+#WEBSITE_LINK#  (index.html)
+
+#WEB_PROJECTS#  (links to PROJECT.html -> needs lower details)
+
+======== CONTACT INFO ===========
+#EMAIL#
+#PHONE#
+#ADDRESS#
+
+======== PROJECT DETAILS ========
+-> Upper
+#PROJECT_NAME#           project name
+#PROJECT_DESC#           simple description
+#PROJECT_LINK#           link to project page
+#PROJECT_URL#            link to project external page
+#PROJECT_IMAGE#          main image for project
+#PROJECT_URL_CONTENT#    raw content for url gets replaced with URL.html
+->Lower
+#FULL_DESC#              bigger description
+#TECHNOLOGIES#           technologies used (desc)
+#TECHNOLOGIES_IMG#
+#TECHNOLOGIES_LOGOS#                               NOTE: GRAB FROM FILE -> NEEDS IMAGE/NAME
+#DEV_PROCESS#           process on making the project
+#DEV_PROCESS_IMG#
+#USAGE#                  how to use or run program
+#USAGE_IMG#
+#IMAGES#                   NOTE COPY FROM FILE -> needs name
+
+->Simple Details
+#TIMELINE#               ex. 2017-current
+#TIMELINE_TITLE#         (Timeline)
+#COLLABORATORS#          ex. collaborators          NOTE: GRAB FROM FILE -> NEEDS IMAGE/NAME
+#COLLABORATORS_TITLE#    (Collaborators)
+#TEAM#                   ex. Sony
+#TEAM_TITLE#             (Team)
+#ROLE#                   ex. Full Stack Developer
+#ROLE_TITLE#             (Role)
+
+
+
+
+(notes)
+About
+Technologies
+Development Details
+Usage
+
+
+====== IMAGES =========
+This file is the images put onto each project
+#NAME#          replaces with file name
+====== LOGOS ==========
+This file represents a small icon
+#NAME#          replaces with the popup name
+#IMAGE#         replaces with the image to display
+#ONCLICK#       replaces with what happens when clicked > window.open('link');
+
+

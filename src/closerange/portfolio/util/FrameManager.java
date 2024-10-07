@@ -10,5 +10,6 @@ public class FrameManager {
         // new LogFrame();
         new TechnologyFrame();
         new CollaboratorFrame();
+        new WebsiteFrame();
     }
 }

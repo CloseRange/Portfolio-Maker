@@ -42,6 +42,7 @@ public class Loader {
         Collaborator.clear();
         Project.clear();
         Technology.clear();
+        Website.clear();
 
         Loader.path = path;
         System.out.println("Loading site: " + path);
