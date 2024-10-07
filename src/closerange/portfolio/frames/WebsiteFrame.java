@@ -2,6 +2,7 @@ package closerange.portfolio.frames;
 
 import closerange.display.GuiFrame;
 import closerange.portfolio.projects.Website;
+import closerange.portfolio.util.Loader;
 import imgui.ImGui;
 import imgui.type.ImString;
 
@@ -25,7 +26,7 @@ public class WebsiteFrame extends GuiFrame {
         Website site = Website.getSite();
         if (current != site)
             updateSelection(site);
-        if (site == null) {
+        if (site == null || !Loader.loaded()) {
             return;
         }
         PropertiesRender.label("Your Name");
